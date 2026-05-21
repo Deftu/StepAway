@@ -2,6 +2,7 @@
     import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
     import { writable } from "svelte/store";
     import { checkForUpdates, performUpdate } from "$lib/updater";
+    import { appVersion } from "$lib/utils";
     import type { Update } from "@tauri-apps/plugin-updater";
 
     const window = getCurrentWebviewWindow();
@@ -50,7 +51,12 @@
 </script>
 
 <nav class="title-bar" data-tauri-drag-region>
-    <h2 class="dfg-header-2">Step Away</h2>
+    <div class="brand-group" data-tauri-drag-region>
+        <h2 class="dfg-header-2">Step Away</h2>
+        {#if $appVersion}
+            <span class="version-badge">v{$appVersion}</span>
+        {/if}
+    </div>
 
     <div class="title-bar-controls">
         <!-- Updater Button -->
@@ -104,6 +110,20 @@
         padding: 10px 25px;
         justify-content: space-between;
         align-items: center;
+
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .version-badge {
+                background: var(--dfg-background-1);
+                color: var(--dfg-text-faded);
+                font-size: 12px;
+                padding: 2px 6px;
+                border-radius: 4px;
+            }
+        }
 
         .title-bar-controls {
             display: flex;
