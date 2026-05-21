@@ -83,6 +83,7 @@ pub fn update_settings(
 pub fn init_background_worker(app_handle: AppHandle) {
     std::thread::spawn(move || {
         let mut last_idle = 0;
+        let mut action_triggered = false;
 
         loop {
             std::thread::sleep(Duration::from_secs(1));
@@ -105,6 +106,8 @@ pub fn init_background_worker(app_handle: AppHandle) {
             );
 
             if idle_secs >= timeout_secs && last_idle < timeout_secs {
+                action_triggered = true;
+
                 let action = state.action.lock().unwrap().clone();
                 match action.as_str() {
                     "sleep" => sys::sleep(),
@@ -120,7 +123,7 @@ pub fn init_background_worker(app_handle: AppHandle) {
                 }
             }
 
-            if last_idle > 120 && idle_secs < 5 {
+            if action_triggered && idle_secs < 5 {
                 let minutes_away = last_idle / 60;
 
                 let _ = app_handle
@@ -129,6 +132,8 @@ pub fn init_background_worker(app_handle: AppHandle) {
                     .title("Welcome back!")
                     .body(format!("You were away for {} minutes.", minutes_away))
                     .show();
+
+                action_triggered = false;
             }
 
             last_idle = idle_secs;
