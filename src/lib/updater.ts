@@ -23,7 +23,7 @@ export async function performUpdate(
     let total = 0;
     let downloaded = 0;
 
-    await update.download((download) => {
+    await update.downloadAndInstall((download) => {
         switch (download.event) {
             case "Started":
                 if (download.data.contentLength !== undefined) {
