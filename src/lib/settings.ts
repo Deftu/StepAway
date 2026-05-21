@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable, type Writable } from "svelte/store";
 import { invoke } from "@tauri-apps/api/core";
 import { isEnabled } from "@tauri-apps/plugin-autostart";
 
@@ -18,7 +18,11 @@ const defaultSettings: AppSettings = {
     isLoaded: false,
 };
 
-function createSettingsStore() {
+export interface SettingsStore extends Writable<AppSettings> {
+    load: () => Promise<void>;
+}
+
+function createSettingsStore(): SettingsStore {
     const { subscribe, set, update } = writable<AppSettings>(defaultSettings);
 
     const syncWithRust = (state: AppSettings) => {
@@ -66,6 +70,13 @@ function createSettingsStore() {
             }
         },
     };
+}
+
+export function togglePause(store: SettingsStore) {
+    store.update((s) => {
+        s.isPaused = !s.isPaused;
+        return s;
+    });
 }
 
 export const settings = createSettingsStore();

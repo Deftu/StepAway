@@ -1,37 +1,18 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { sleep, lock, shutdown } from '$lib/system';
-  import { settings } from '$lib/settings';
-  import Dropdown from '$lib/components/Dropdown.svelte';
-  import { enable, disable } from '@tauri-apps/plugin-autostart';
+  import { onMount } from "svelte";
+  import { sleep, lock, shutdown, toggleAutoStart } from "$lib/system";
+  import { settings, togglePause } from "$lib/settings";
+  import Dropdown from "$lib/components/Dropdown.svelte";
 
   onMount(() => {
       settings.load();
   });
 
-  function togglePause() {
-      $settings.isPaused = !$settings.isPaused;
-  }
-
-  async function toggleAutostart() {
-      try {
-          if ($settings.isAutostart) {
-              await disable();
-              $settings.isAutostart = false;
-          } else {
-              await enable();
-              $settings.isAutostart = true;
-          }
-      } catch (err) {
-          console.error("Failed to toggle autostart:", err);
-      }
-  }
-
   const actionOptions = [
-      { value: 'sleep', label: 'Sleep Displays' },
-      { value: 'lock', label: 'Lock OS' },
-      { value: 'lock_and_sleep', label: 'Lock OS & Sleep ' },
-      { value: 'shutdown', label: 'Shutdown System' }
+      { value: "sleep", label: "Sleep Displays" },
+      { value: "lock", label: "Lock OS" },
+      { value: "lock_and_sleep", label: "Lock OS & Sleep " },
+      { value: "shutdown", label: "Shutdown System" }
   ];
 </script>
 
@@ -54,20 +35,20 @@
       <div class="row-between">
           <h2 class="dfg-title-2">Launch on Boot</h2>
           <button
-              class="dfg-button status-toggle {$settings.isAutostart ? 'is-on' : 'is-off'}" 
-              onclick={toggleAutostart}
+              class="dfg-button status-toggle {$settings.isAutostart ? "is-on" : "is-off"}" 
+              onclick={() => toggleAutoStart(settings)}
           >
-              {$settings.isAutostart ? 'Enabled' : 'Disabled'}
+              {$settings.isAutostart ? "Enabled" : "Disabled"}
           </button>
       </div>
 
       <div class="row-between">
           <h2 class="dfg-title-2">Auto Timer</h2>
           <button
-              class="dfg-button status-toggle {$settings.isPaused ? 'is-off' : 'is-on'}" 
-              onclick={togglePause}
+              class="dfg-button status-toggle {$settings.isPaused ? "is-off" : "is-on"}" 
+              onclick={() => togglePause(settings)}
           >
-              {$settings.isPaused ? 'Paused' : 'Active'}
+              {$settings.isPaused ? "Paused" : "Active"}
           </button>
       </div>
 
