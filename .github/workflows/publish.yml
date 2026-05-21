@@ -3,6 +3,9 @@ name: "Build and publish GitHub release"
 on:
     workflow_dispatch:
 
+env:
+    TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+
 jobs:
     publish-tauri:
         permissions:
