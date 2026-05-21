@@ -32,10 +32,10 @@
     "app": {
         "windows": [
             {
-                "minWidth": 500,
-                "minHeight": 600,
-                "width": 500,
-                "height": 600,
+                "minWidth": 550,
+                "minHeight": 650,
+                "width": 550,
+                "height": 650,
                 "center": true,
                 "fullscreen": false,
                 "resizable": false,
