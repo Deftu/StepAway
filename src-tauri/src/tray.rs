@@ -11,6 +11,7 @@ pub fn create_tray(app: &App) -> tauri::Result<()> {
 
     let _tray = TrayIconBuilder::new()
         .title("Step Away")
+        .tooltip("Step Away")
         .icon(app.default_window_icon().unwrap().clone())
         .menu(&menu)
         .show_menu_on_left_click(false)
