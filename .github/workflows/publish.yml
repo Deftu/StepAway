@@ -54,7 +54,9 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
+                  # I don't know which one I'm expected to use because both are in the docs...
                   uploadUpdaterJson: true
+                  includeUpdaterJson: true
                   updaterJsonPreferNsis: true
                   tagName: step-away-v__VERSION__
                   releaseName: "Step Away v__VERSION__"
