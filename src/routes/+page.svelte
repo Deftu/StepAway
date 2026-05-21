@@ -30,6 +30,7 @@
   const actionOptions = [
       { value: 'sleep', label: 'Sleep Displays' },
       { value: 'lock', label: 'Lock OS' },
+      { value: 'lock_and_sleep', label: 'Lock OS & Sleep ' },
       { value: 'shutdown', label: 'Shutdown System' }
   ];
 </script>

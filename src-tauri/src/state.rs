@@ -109,6 +109,12 @@ pub fn init_background_worker(app_handle: AppHandle) {
                 match action.as_str() {
                     "sleep" => sys::sleep(),
                     "lock" => sys::lock(),
+                    "lock_and_sleep" => {
+                        sys::lock();
+                        std::thread::sleep(Duration::from_secs(2));
+                        sys::sleep();
+                    }
+
                     "shutdown" => sys::shutdown(),
                     _ => {}
                 }
