@@ -25,7 +25,8 @@
             "digestAlgorithm": "sha256",
             "timestampUrl": null
         },
-        "longDescription": ""
+        "longDescription": "",
+        "createUpdaterArtifacts": true
     },
     "productName": "Step Away",
     "identifier": "dev.deftu.step-away",
