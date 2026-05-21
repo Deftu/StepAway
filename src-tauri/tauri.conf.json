@@ -51,7 +51,7 @@
     },
     "plugins": {
         "updater": {
-            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDU0M0RDM0Q1MjFFNDY3MDUKUldRRlorUWgxY005Vk1aTEgzVXg1T0tzUnArN2VoMjgvWHBCMDJ2ZDR0bXAwYXhwMVErTEo1dXgK",
+            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDY3RkREQzBBN0FBNUI4QwpSV1NNVzZxbndOMS9CczhaK250OWRRZUxod3dEQXUweStLNVhEbE0wYWFWYjBWMlBVUW1JTDUyYgo=",
             "endpoints": [
                 "https://github.com/Deftu/StepAway/releases/latest/download/latest.json"
             ],
