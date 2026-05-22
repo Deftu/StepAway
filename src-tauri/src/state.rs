@@ -2,7 +2,7 @@ use serde_json::json;
 use std::sync::Mutex;
 use std::time::Duration;
 use system_idle_time::get_idle_time;
-use tauri::{AppHandle, Manager};
+use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_notification::NotificationExt;
 use tauri_plugin_store::StoreExt;
 
@@ -84,6 +84,7 @@ pub fn init_background_worker(app_handle: AppHandle) {
     std::thread::spawn(move || {
         let mut last_idle = 0;
         let mut action_triggered = false;
+        let mut warning_active = false;
 
         loop {
             std::thread::sleep(Duration::from_secs(1));
@@ -100,13 +101,32 @@ pub fn init_background_worker(app_handle: AppHandle) {
             };
 
             let timeout_secs = *state.timeout_minutes.lock().unwrap() * 60;
-            println!(
-                "state: idle_secs={}, timeout_secs={}, last_idle={}",
-                idle_secs, timeout_secs, last_idle
-            );
+            let remaining_secs = timeout_secs.saturating_sub(idle_secs);
+
+            if warning_active && idle_secs < last_idle {
+                warning_active = false;
+                let _ = app_handle.emit("warning-hide", ());
+            }
+
+            if remaining_secs <= 15 && remaining_secs > 0 && idle_secs > 0 {
+                if !warning_active {
+                    warning_active = true;
+                    if let Some(warning_window) = app_handle.get_webview_window("overlay") {
+                        let _ = warning_window.set_ignore_cursor_events(true);
+                        let _ = warning_window.show();
+                    }
+                }
+
+                let _ = app_handle.emit("warning-tick", remaining_secs);
+            }
 
             if idle_secs >= timeout_secs && last_idle < timeout_secs {
                 action_triggered = true;
+
+                warning_active = false;
+                if let Some(warning_window) = app_handle.get_webview_window("overlay") {
+                    let _ = warning_window.hide();
+                }
 
                 let action = state.action.lock().unwrap().clone();
                 match action.as_str() {

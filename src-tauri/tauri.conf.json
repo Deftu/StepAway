@@ -41,8 +41,24 @@
                 "fullscreen": false,
                 "resizable": false,
                 "title": "Step Away",
+                "label": "main",
                 "decorations": false,
                 "visible": false
+            },
+            {
+                "width": 320,
+                "height": 80,
+                "center": true,
+                "transparent": true,
+                "title": "Step Away - Overlay",
+                "label": "overlay",
+                "url": "/overlay",
+                "decorations": false,
+                "alwaysOnTop": true,
+                "skipTaskbar": true,
+                "visible": false,
+                "resizable": false,
+                "shadow": false
             }
         ],
         "macOSPrivateApi": true,

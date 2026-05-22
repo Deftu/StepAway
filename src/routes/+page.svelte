@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { sleep, lock, shutdown, toggleAutoStart } from "$lib/system";
   import { settings, togglePause } from "$lib/settings";
+  import TitleBar from "$lib/components/TitleBar.svelte";
   import Dropdown from "$lib/components/Dropdown.svelte";
 
   onMount(() => {
@@ -16,6 +17,7 @@
   ];
 </script>
 
+<TitleBar />
 {#if $settings.isLoaded}
 <main class="panel">
   <!-- Quick Actions -->

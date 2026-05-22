@@ -9,7 +9,6 @@
     import "../app.css";
     import "../theme.css";
 
-    import TitleBar from "$lib/components/TitleBar.svelte";
     import { onMount } from "svelte";
 
     onMount(() => {
@@ -20,5 +19,4 @@
     });
 </script>
 
-<TitleBar />
 <slot />
