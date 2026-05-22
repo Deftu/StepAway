@@ -19,6 +19,7 @@ pub fn run() {
             app.manage(state::AppState::new(app.handle()));
             state::init_background_worker(app.handle().clone());
             start_minimized(app.handle());
+            enable_devtools(app.handle());
             tray::create_tray(app)?;
             prevent_window_termination(app.handle());
 
@@ -42,6 +43,16 @@ fn start_minimized(app: &AppHandle) {
         if let Some(window) = app.get_webview_window("main") {
             window.show().unwrap();
             window.set_focus().unwrap();
+        }
+    }
+}
+
+fn enable_devtools(app: &AppHandle) {
+    let args: Vec<String> = std::env::args().collect();
+
+    if args.contains(&"--devtools".to_string()) {
+        if let Some(window) = app.get_webview_window("main") {
+            window.open_devtools();
         }
     }
 }
