@@ -28,6 +28,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             sleep,
             lock,
+            lock_and_sleep,
             shutdown,
             state::get_settings,
             state::update_settings
@@ -78,6 +79,13 @@ fn sleep() {
 #[tauri::command]
 fn lock() {
     sys::lock();
+}
+
+#[tauri::command]
+fn lock_and_sleep() {
+    sys::lock();
+    std::thread::sleep(std::time::Duration::from_secs(2));
+    sys::sleep();
 }
 
 #[tauri::command]

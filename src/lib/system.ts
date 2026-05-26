@@ -11,6 +11,10 @@ export function lock() {
     invoke("lock");
 }
 
+export function lockAndSleep() {
+    invoke("lock_and_sleep");
+}
+
 export function shutdown() {
     invoke("shutdown");
 }

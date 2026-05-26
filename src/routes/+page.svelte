@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { sleep, lock, shutdown, toggleAutoStart } from "$lib/system";
+  import { sleep, lock, lockAndSleep, shutdown, toggleAutoStart } from "$lib/system";
   import { settings, togglePause } from "$lib/settings";
   import TitleBar from "$lib/components/TitleBar.svelte";
   import Dropdown from "$lib/components/Dropdown.svelte";
@@ -22,11 +22,12 @@
 <main class="panel">
   <!-- Quick Actions -->
   <section class="settings-group">
-      <h2 class="dfg-title-2">Quick Actions</h2>
+    <h2 class="dfg-title-2">Quick Actions</h2>
       <div class="action-grid">
-          <button class="dfg-button action-btn" onclick={sleep}>Sleep</button>
-          <button class="dfg-button action-btn" onclick={lock}>Lock</button>
-          <button class="dfg-button danger-btn" onclick={shutdown}>Shutdown</button>
+        <button class="dfg-button action-btn" onclick={sleep}>Sleep</button>
+        <button class="dfg-button action-btn" onclick={lock}>Lock</button>
+        <button class="dfg-button action-btn" onclick={lockAndSleep}>Lock & Sleep</button>
+        <button class="dfg-button danger-btn" onclick={shutdown}>Shutdown</button>
       </div>
   </section>
 
@@ -118,7 +119,7 @@
 
       .action-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(2, 1fr);
           gap: 10px;
       }
 
